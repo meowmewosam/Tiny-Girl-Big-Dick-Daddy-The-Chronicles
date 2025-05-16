@@ -1,0 +1,35 @@
+/* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: url('assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+.manga-container {
+  width: 100vw;
+  scroll-behavior: smooth;
+}
+
+.manga-panel {
+  width: 100vw;
+  height: 100vh; /* full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; /* Let background image show through */
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.manga-panel img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
