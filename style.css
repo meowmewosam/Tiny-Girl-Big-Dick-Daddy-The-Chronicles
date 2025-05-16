@@ -1,35 +1,178 @@
-/* Reset default browser styles */
-* {
+/* Reset and base settings */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Hearts container fills viewport, behind manga content */
+.hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Clicks pass through */
+  overflow: visible;
+  z-index: 0; /* Behind content */
+}
+
+/* Heart shape using CSS */
+.heart {
+  position: absolute;
+  width: 30px;
+  height: 28px;
+  background: transparent;
+  border: 2px solid pink;
+  border-radius: 15px 15px 0 0;
+  transform: rotate(-45deg);
+  animation: blink 3s ease-in-out infinite;
+  opacity: 0.6;
   box-sizing: border-box;
 }
 
-body, html {
-  height: 100%;
-  font-family: Arial, sans-serif;
-  background: url('assets/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  overflow-x: hidden;
+/* Create the two lobes of the heart using pseudo elements */
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 28px;
+  background: transparent;
+  border: 2px solid pink;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
 
+.heart::before {
+  top: -14px;
+  left: 0;
+}
+
+.heart::after {
+  left: 14px;
+  top: 0;
+}
+
+/* Blink animation */
+@keyframes blink {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+/* Position each heart randomly using nth-child */
+.hearts-container .heart:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  width: 25px;
+  height: 23px;
+}
+
+.hearts-container .heart:nth-child(2) {
+  top: 40%;
+  left: 75%;
+  animation-delay: 1s;
+  width: 30px;
+  height: 28px;
+}
+
+.hearts-container .heart:nth-child(3) {
+  top: 65%;
+  left: 35%;
+  animation-delay: 2s;
+  width: 35px;
+  height: 33px;
+}
+
+.hearts-container .heart:nth-child(4) {
+  top: 85%;
+  left: 55%;
+  animation-delay: 1.5s;
+  width: 20px;
+  height: 18px;
+}
+
+.hearts-container .heart:nth-child(5) {
+  top: 10%;
+  left: 45%;
+  animation-delay: 2.5s;
+  width: 28px;
+  height: 26px;
+}
+
+/* Manga container styling */
 .manga-container {
-  width: 100vw;
-  scroll-behavior: smooth;
+  position: relative;
+  z-index: 1; /* Above hearts */
+  width: 100%;
+  max-width: 600px; /* Restrict width for readability */
+  margin: 0 auto;
+  padding: 20px 0;
+  background-image: url('assets/background.jpg'); /* Your background image */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 90vh; /* So it scrolls if content is taller than viewport */
 }
 
+/* Each manga panel */
 .manga-panel {
-  width: 100vw;
-  height: 100vh; /* full viewport height */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent; /* Let background image show through */
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .manga-panel img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  user-select: none;
+  pointer-events: none; /* Prevent accidental drag */
+}
+
+/* Scrollbar styling for manga container (optional) */
+.manga-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.manga-container::-webkit-scrollbar-track {
+  background: rgba(255, 192, 203, 0.2); /* Light pinkish */
+  border-radius: 4px;
+}
+
+.manga-container::-webkit-scrollbar-thumb {
+  background: pink;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .manga-container {
+    max-width: 100%;
+    border-radius: 0;
+    padding: 10px 0;
+  }
+
+  .heart {
+    width: 20px !important;
+    height: 18px !important;
+    border-width: 1.5px !important;
+  }
+
+  .heart::before,
+  .heart::after {
+    width: 20px !important;
+    height: 18px !important;
+    border-width: 1.5px !important;
+  }
 }
